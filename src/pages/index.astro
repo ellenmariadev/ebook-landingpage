@@ -5,60 +5,87 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import Ebook from "../assets/ebook.svg";
 import Logo from "../assets/logo.svg";
+
+let cardsFirstList = [
+  {
+    number: "01",
+    title: "Receitas naturais",
+    body: "Para cuidados com a pele, cabelo e corpo, feitas com ingredientes simples e eficazes.",
+  },
+  {
+    number: "02",
+    title: "Produtos naturais",
+    body: "Dicas para identificar e selecionar os melhores produtos naturais de acordo com suas necessidades específicas.",
+  },
+  {
+    number: "03",
+    title: "Abordagem consciente",
+    body: "Sobre a sustentabilidade e a importância de fazer escolhas responsáveis em seu dia a dia.",
+  },
+];
+
+let cardsSecondList = [
+  {
+    number: "04",
+    title: "Considerações especiais",
+    body: "Para garantir uma experiência de cuidados naturais segura e satisfatória.",
+  },
+  {
+    number: "05",
+    title: "Recursos adicionais",
+    body: "Para expandir seus conhecimentos e se aprofundar no universo dos produtos naturais.",
+  },
+  {
+    number: "06",
+    title: "Considerações especiais",
+    body: "Para garantir uma experiência de cuidados naturais segura e satisfatória.",
+  },
+];
 ---
 
 <Layout title="E-book | Guia Definitivo">
   <Header />
   <main>
     <div class="intro">
-      <p>O Guia Definitivo</p>
+      <p class="text-detail">O Guia Definitivo</p>
       <h1>
         Guia de Produtos<span class="clr-green"> Naturais</span>
         Para Cuidado do Corpo
       </h1>
       <a class="button" href="https://pay.kiwify.com.br/2yqmDl0" target="_blank"
-        >Compre agora o seu e-book <i class="fa fa-shopping-cart" aria-hidden="true"
-        ></i>
+        >Compre agora o seu e-book <i
+          class="fa fa-shopping-cart"
+          aria-hidden="true"></i>
       </a>
     </div>
     <img class="book-cover" src={Ebook} alt="capa do e-book" />
   </main>
 
-  <section>
+  <section id="sobre">
     <ul role="list" class="list">
-      <Card
-        number="01"
-        title="Receitas naturais"
-        body="Para cuidados com a pele, cabelo e corpo, feitas com ingredientes simples e eficazes."
-      />
-      <Card
-        number="02"
-        title="Produtos naturais"
-        body="Dicas para identificar e selecionar os melhores produtos naturais de acordo com suas necessidades específicas."
-      />
-      <Card
-        number="03"
-        title="Abordagem consciente"
-        body="Sobre a sustentabilidade e a importância de fazer escolhas responsáveis em seu dia a dia."
-      />
+      {
+        cardsFirstList.map((card, index, array) => (
+          <Card
+            number={card.number}
+            title={card.title}
+            body={card.body}
+            isLast={index === array.length - 1}
+          />
+        ))
+      }
     </ul>
     <img class="logo" src={Logo} alt="Logo" />
     <ul role="list" class="list" data-attribute="second">
-      <Card
-        number="04"
-        title="Considerações especiais"
-        body="Para garantir uma experiência de cuidados naturais segura e satisfatória."
-      />
-      <Card
-        number="05"
-        title="Recursos adicionais"
-        body="Para expandir seus conhecimentos e se aprofundar no universo dos produtos naturais."
-      />
-      <Card
-        number="06"
-        title="Considerações especiais"
-        body="Para garantir uma experiência de cuidados naturais segura e satisfatória."
-      />
+      {
+        cardsSecondList.map((card, index, array) => (
+          <Card
+            number={card.number}
+            title={card.title}
+            body={card.body}
+            isLast={index === array.length - 1}
+          />
+        ))
+      }
     </ul>
   </section>
   <Footer />
@@ -94,38 +121,55 @@ import Logo from "../assets/logo.svg";
   .button {
     display: inline-block;
     position: absolute;
-    top: 93%; 
-    left: 80px; 
+    top: 93%;
+    left: 80px;
     right: 0;
     border-radius: 10px;
     background: #0d9955;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    padding: 1rem 2rem;
+    padding: clamp(0.7rem, 2vw, 0.875rem) clamp(1rem, 2vw, 1rem);
+    font-size: clamp(0.6rem, 2vw, 1rem);
     text-transform: uppercase;
     color: #fff;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
     border: none;
-    max-width: 400px;
+    max-width: fit-content;
+    z-index: 9999;
+  }
+
+  @media (max-width: 850px) {
+    .button {
+      left: 20px;
+    }
   }
 
   i {
     margin-left: 0.75rem;
-    font-size: 1.1rem;
+    font-size: clamp(0.75rem, 2vw, 1.1rem);
+  }
+
+  @media (max-width: 450px) {
+    .button {
+      left: 0;
+    }
   }
 
   .button:hover {
     background-color: #216745;
   }
 
-  p {
+  .text-detail {
     font-size: clamp(0.75rem, 2.5vw, 30px);
     font-style: normal;
     font-weight: 700;
     letter-spacing: 2.4px;
     word-break: keep-all;
+    width: fit-content;
+    border-bottom: 1px solid #7ed957;
   }
+
   h1 {
     font-size: clamp(0.875rem, 4vw, 4rem);
     text-transform: uppercase;
@@ -144,19 +188,34 @@ import Logo from "../assets/logo.svg";
     grid-template-columns: 1fr 1fr 1fr;
     padding-top: 10rem;
     place-items: center;
-
     gap: 1rem;
   }
 
   .list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2rem; 
+    margin-bottom: 1rem;
   }
 
   .logo {
     display: block;
     max-width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    section {
+      grid-template-columns: 1fr;
+      place-items: start;
+      padding-top: 5rem;
+    }
+    .logo {
+      width: 30%;
+      grid-column: 1;
+      grid-row: 1;
+      place-self: center;
+      margin-bottom: 2rem;
+    }
   }
 
   @media (max-width: 800px) {
@@ -176,7 +235,7 @@ import Logo from "../assets/logo.svg";
 
   @media (max-width: 380px) {
     .intro {
-      height: 130px;
+      height: 140px;
     }
   }
 
